@@ -6,3 +6,5 @@ client/.next/
 /.cursor
 /.qodo
 .env.local
+./cursor
+./qodo
