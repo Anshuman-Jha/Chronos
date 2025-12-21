@@ -104,6 +104,8 @@
   "exclude": [
     "node_modules",
     "dist",
-    "src/prisma"
+    "src/prisma/schema.prisma",
+    "src/prisma/seed.ts",
+    "src/prisma/seedData"
   ]
 }
