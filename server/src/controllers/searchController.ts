@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { prisma } from "../../prisma/client";
+import { prisma } from "../prisma/client";
 export const search = async (req: Request, res: Response): Promise<void> => {
   const { query } = req.query;
   try {

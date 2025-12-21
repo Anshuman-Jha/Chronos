@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { prisma } from "../../prisma/client";
+import { prisma } from "../prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -23,7 +23,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     const existingUser = await prisma.user.findFirst({
       where: {
         OR: [{ email }, { username }],
-      }, 
+      },
     });
 
     if (existingUser) {

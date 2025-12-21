@@ -104,6 +104,6 @@
   "exclude": [
     "node_modules",
     "dist",
-    "prisma"
+    "src/prisma"
   ]
 }
