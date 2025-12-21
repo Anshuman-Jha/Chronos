@@ -1,0 +1,142 @@
+[
+  {
+    "username": "AliceJones",
+    "email": "alicejones@example.com",
+    "password": "password123",
+    "teamId": 1,
+    "profilePictureUrl": "p1.jpeg"
+  },
+  {
+    "username": "BobSmith",
+    "email": "bobsmith@example.com",
+    "password": "password123",
+    "teamId": 2,
+    "profilePictureUrl": "p2.jpeg"
+  },
+  {
+    "username": "CarolWhite",
+    "email": "carolwhite@example.com",
+    "password": "password123",
+    "teamId": 3,
+    "profilePictureUrl": "p3.jpeg"
+  },
+  {
+    "username": "DaveBrown",
+    "email": "davebrown@example.com",
+    "password": "password123",
+    "teamId": 4,
+    "profilePictureUrl": "p4.jpeg"
+  },
+  {
+    "username": "EveClark",
+    "email": "eveclark@example.com",
+    "password": "password123",
+    "teamId": 5,
+    "profilePictureUrl": "p5.jpeg"
+  },
+  {
+    "username": "FrankWright",
+    "email": "frankwright@example.com",
+    "password": "password123",
+    "teamId": 1,
+    "profilePictureUrl": "p6.jpeg"
+  },
+  {
+    "username": "GraceHall",
+    "email": "gracehall@example.com",
+    "password": "password123",
+    "teamId": 2,
+    "profilePictureUrl": "p7.jpeg"
+  },
+  {
+    "username": "HenryAllen",
+    "email": "henryallen@example.com",
+    "password": "password123",
+    "teamId": 3,
+    "profilePictureUrl": "p8.jpeg"
+  },
+  {
+    "username": "IdaMartin",
+    "email": "idamartin@example.com",
+    "password": "password123",
+    "teamId": 4,
+    "profilePictureUrl": "p9.jpeg"
+  },
+  {
+    "username": "JohnDoe",
+    "email": "johndoe@example.com",
+    "password": "password123",
+    "teamId": 5,
+    "profilePictureUrl": "p10.jpeg"
+  },
+  {
+    "username": "LauraAdams",
+    "email": "lauraadams@example.com",
+    "password": "password123",
+    "teamId": 1,
+    "profilePictureUrl": "p11.jpeg"
+  },
+  {
+    "username": "NormanBates",
+    "email": "normanbates@example.com",
+    "password": "password123",
+    "teamId": 2,
+    "profilePictureUrl": "p12.jpeg"
+  },
+  {
+    "username": "OliviaPace",
+    "email": "oliviapace@example.com",
+    "password": "password123",
+    "teamId": 3,
+    "profilePictureUrl": "p13.jpeg"
+  },
+  {
+    "username": "PeterQuill",
+    "email": "peterquill@example.com",
+    "password": "password123",
+    "teamId": 4,
+    "profilePictureUrl": "p1.jpeg"
+  },
+  {
+    "username": "QuincyAdams",
+    "email": "quincyadams@example.com",
+    "password": "password123",
+    "teamId": 5,
+    "profilePictureUrl": "p2.jpeg"
+  },
+  {
+    "username": "RachelGreen",
+    "email": "rachelgreen@example.com",
+    "password": "password123",
+    "teamId": 1,
+    "profilePictureUrl": "p3.jpeg"
+  },
+  {
+    "username": "SteveJobs",
+    "email": "stevejobs@example.com",
+    "password": "password123",
+    "teamId": 2,
+    "profilePictureUrl": "p4.jpeg"
+  },
+  {
+    "username": "TinaFey",
+    "email": "tinafey@example.com",
+    "password": "password123",
+    "teamId": 3,
+    "profilePictureUrl": "p5.jpeg"
+  },
+  {
+    "username": "UrsulaMonroe",
+    "email": "ursulamonroe@example.com",
+    "password": "password123",
+    "teamId": 4,
+    "profilePictureUrl": "p6.jpeg"
+  },
+  {
+    "username": "VictorHugo",
+    "email": "victorhugo@example.com",
+    "password": "password123",
+    "teamId": 5,
+    "profilePictureUrl": "p7.jpeg"
+  }
+]
