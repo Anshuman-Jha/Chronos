@@ -41,7 +41,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         email,
         password: hashedPassword,
         profilePictureUrl: profilePictureUrl || "i1.jpg",
-        teamId: teamId || 1,
+        teamId: teamId || null,
       },
     });
 
