@@ -50,10 +50,4 @@ app.get("/health", (req, res) => {
 const port = Number(process.env.PORT) || 3001;
 app.listen(port, "0.0.0.0", () => {
   console.log(`Server running on port ${port}`);
-  // #region agent log
-  const fs = require('fs');
-  const logPath = '/Users/anishajha/Documents/Chronos/.cursor/debug.log';
-  const logEntry = JSON.stringify({ location: 'index.ts:45', message: 'Server started', data: { port, host: '0.0.0.0', envPort: process.env.PORT }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'A' }) + '\n';
-  fs.appendFileSync(logPath, logEntry);
-  // #endregion
 });
