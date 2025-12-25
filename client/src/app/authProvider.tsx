@@ -47,22 +47,26 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    // #region agent log
-    let apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    // Fix: If env var points to wrong port or is undefined, use correct default
-    if (!apiBaseUrl || apiBaseUrl.includes(':8000')) {
+  
+    let apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+    
+    
+    apiBaseUrl = apiBaseUrl.trim().replace(/['"]+/g, '');
+
+    
+    apiBaseUrl = apiBaseUrl.replace(/\/$/, "");
+
+   
+    if (!apiBaseUrl) {
       apiBaseUrl = 'http://localhost:3001';
-      console.warn('[DEBUG] Using fallback API URL:', apiBaseUrl);
+      console.warn('[DEBUG] Missing Env Var. Using fallback:', apiBaseUrl);
     }
+
     const apiUrl = `${apiBaseUrl}/auth/login`;
-    console.log('[DEBUG] Login - API Base URL:', apiBaseUrl);
-    console.log('[DEBUG] Login - Full API URL:', apiUrl);
-    fetch('http://127.0.0.1:7244/ingest/4fac62cf-6ab2-460d-a6dd-8f54f26c9b40', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'authProvider.tsx:49', message: 'Login attempt started', data: { apiUrl, apiBaseUrl, email, hasPassword: !!password, envVar: process.env.NEXT_PUBLIC_API_BASE_URL }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'A' }) }).catch(() => { });
-    // #endregion
+    console.log('[DEBUG] Cleaned Login URL:', apiUrl);
+   
+
     try {
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/4fac62cf-6ab2-460d-a6dd-8f54f26c9b40', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'authProvider.tsx:52', message: 'About to call fetch', data: { apiUrl, method: 'POST' }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'B' }) }).catch(() => { });
-      // #endregion
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -70,52 +74,51 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         },
         body: JSON.stringify({ email, password }),
       });
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/4fac62cf-6ab2-460d-a6dd-8f54f26c9b40', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'authProvider.tsx:60', message: 'Fetch completed', data: { status: response.status, statusText: response.statusText, ok: response.ok }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'C' }) }).catch(() => { });
-      // #endregion
 
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Login failed");
+        // Fix: Read text first to prevent crash if server returns HTML (404/500) instead of JSON
+        const errorText = await response.text();
+        let errorObj;
+        try {
+            errorObj = JSON.parse(errorText);
+        } catch {
+            errorObj = { message: errorText || "Login failed" };
+        }
+        throw new Error(errorObj.message || "Login failed");
       }
 
       const data = await response.json();
       const { token: newToken, user: userData } = data;
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/4fac62cf-6ab2-460d-a6dd-8f54f26c9b40', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'authProvider.tsx:65', message: 'Login success', data: { hasToken: !!newToken, hasUser: !!userData }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'D' }) }).catch(() => { });
-      // #endregion
+
       setToken(newToken);
       setUser(userData);
       localStorage.setItem("token", newToken);
       localStorage.setItem("user", JSON.stringify(userData));
     } catch (error: any) {
-      // #region agent log
       console.error('[DEBUG] Login error:', error);
-      console.error('[DEBUG] Login error message:', error.message);
-      console.error('[DEBUG] Login error name:', error.name);
-      fetch('http://127.0.0.1:7244/ingest/4fac62cf-6ab2-460d-a6dd-8f54f26c9b40', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'authProvider.tsx:72', message: 'Login error caught', data: { errorMessage: error.message, errorName: error.name, errorStack: error.stack?.substring(0, 200) }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'E' }) }).catch(() => { });
-      // #endregion
       throw new Error(error.message || "Login failed");
     }
   };
 
   const register = async (username: string, email: string, password: string) => {
-    // #region agent log
-    let apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    // Fix: If env var points to wrong port or is undefined, use correct default
-    if (!apiBaseUrl || apiBaseUrl.includes(':8000')) {
+ 
+    let apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+    
+    apiBaseUrl = apiBaseUrl.trim().replace(/['"]+/g, '');
+
+    apiBaseUrl = apiBaseUrl.replace(/\/$/, "");
+
+   
+    if (!apiBaseUrl) {
       apiBaseUrl = 'http://localhost:3001';
-      console.warn('[DEBUG] Using fallback API URL:', apiBaseUrl);
+      console.warn('[DEBUG] Missing Env Var. Using fallback:', apiBaseUrl);
     }
+
     const apiUrl = `${apiBaseUrl}/auth/register`;
-    console.log('[DEBUG] Register - API Base URL:', apiBaseUrl);
-    console.log('[DEBUG] Register - Full API URL:', apiUrl);
-    fetch('http://127.0.0.1:7244/ingest/4fac62cf-6ab2-460d-a6dd-8f54f26c9b40', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'authProvider.tsx:76', message: 'Register attempt started', data: { apiUrl, apiBaseUrl, username, email, hasPassword: !!password, envVar: process.env.NEXT_PUBLIC_API_BASE_URL }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'A' }) }).catch(() => { });
-    // #endregion
+    console.log('[DEBUG] Cleaned Register URL:', apiUrl);
+    
+
     try {
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/4fac62cf-6ab2-460d-a6dd-8f54f26c9b40', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'authProvider.tsx:79', message: 'About to call fetch for register', data: { apiUrl, method: 'POST' }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'B' }) }).catch(() => { });
-      // #endregion
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -123,31 +126,28 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         },
         body: JSON.stringify({ username, email, password }),
       });
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/4fac62cf-6ab2-460d-a6dd-8f54f26c9b40', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'authProvider.tsx:87', message: 'Register fetch completed', data: { status: response.status, statusText: response.statusText, ok: response.ok }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'C' }) }).catch(() => { });
-      // #endregion
 
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Registration failed");
+      
+         const errorText = await response.text();
+         let errorObj;
+         try {
+             errorObj = JSON.parse(errorText);
+         } catch {
+             errorObj = { message: errorText || "Registration failed" };
+         }
+         throw new Error(errorObj.message || "Registration failed");
       }
 
       const data = await response.json();
       const { token: newToken, user: userData } = data;
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/4fac62cf-6ab2-460d-a6dd-8f54f26c9b40', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'authProvider.tsx:92', message: 'Register success', data: { hasToken: !!newToken, hasUser: !!userData }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'D' }) }).catch(() => { });
-      // #endregion
+
       setToken(newToken);
       setUser(userData);
       localStorage.setItem("token", newToken);
       localStorage.setItem("user", JSON.stringify(userData));
     } catch (error: any) {
-      // #region agent log
       console.error('[DEBUG] Register error:', error);
-      console.error('[DEBUG] Register error message:', error.message);
-      console.error('[DEBUG] Register error name:', error.name);
-      fetch('http://127.0.0.1:7244/ingest/4fac62cf-6ab2-460d-a6dd-8f54f26c9b40', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'authProvider.tsx:99', message: 'Register error caught', data: { errorMessage: error.message, errorName: error.name, errorStack: error.stack?.substring(0, 200) }, timestamp: Date.now(), sessionId: 'debug-session', runId: 'run1', hypothesisId: 'E' }) }).catch(() => { });
-      // #endregion
       throw new Error(error.message || "Registration failed");
     }
   };
