@@ -49,36 +49,16 @@
 
 ---
 
-## 📂 Project Structure
-
-This repository follows a monorepo-style structure:
-
-```bash
-Chronos/
-├── client/         # Frontend React/Next.js Application
-│   ├── src/
-│   ├── public/
-│   └── package.json
-│
-└── server/         # Backend Node.js/Express API
-    ├── src/
-    ├── prisma/     # Database Schema
-    └── package.json
-
----
-
 ## 🏗️ System Architecture
-
-<div align="center">
 
 ```mermaid
 %%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#00d4ff', 'primaryTextColor': '#fff', 'primaryBorderColor': '#00d4ff', 'lineColor': '#b967ff', 'secondaryColor': '#b967ff', 'tertiaryColor': '#fff'}}}%%
 
 graph TD
-    classDef client fill:#000000,stroke:#00d4ff,stroke-width:2px,color:#fff,shadow:0 0 10px #00d4ff;
-    classDef server fill:#000000,stroke:#b967ff,stroke-width:2px,color:#fff,shadow:0 0 10px #b967ff;
-    classDef db fill:#000000,stroke:#2ecc71,stroke-width:2px,color:#fff,shadow:0 0 10px #2ecc71;
-    classDef user fill:#000000,stroke:#f1c40f,stroke-width:2px,color:#fff,shadow:0 0 10px #f1c40f;
+    classDef client fill:#000000,stroke:#00d4ff,stroke-width:2px,color:#fff;
+    classDef server fill:#000000,stroke:#b967ff,stroke-width:2px,color:#fff;
+    classDef db fill:#000000,stroke:#2ecc71,stroke-width:2px,color:#fff;
+    classDef user fill:#000000,stroke:#f1c40f,stroke-width:2px,color:#fff;
 
     User((User)):::user
     
@@ -106,7 +86,23 @@ graph TD
     linkStyle 3 stroke:#2ecc71,stroke-width:3px;
 ```
 
-</div>
+---
+
+## 📂 Project Structure
+
+This repository follows a monorepo-style structure:
+
+```bash
+Chronos/
+├── client/         # Frontend React/Next.js Application
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+└── server/         # Backend Node.js/Express API
+    ├── src/
+    ├── prisma/     # Database Schema
+    └── package.json
 
 ---
 
