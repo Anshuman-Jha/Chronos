@@ -64,3 +64,80 @@ Chronos/
     ├── src/
     ├── prisma/     # Database Schema
     └── package.json
+
+---
+
+## 🏗️ System Architecture
+
+<div align="center">
+
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': { 'primaryColor': '#00d4ff', 'primaryTextColor': '#fff', 'primaryBorderColor': '#00d4ff', 'lineColor': '#b967ff', 'secondaryColor': '#b967ff', 'tertiaryColor': '#fff'}}}%%
+
+graph TD
+    classDef client fill:#000000,stroke:#00d4ff,stroke-width:2px,color:#fff,shadow:0 0 10px #00d4ff;
+    classDef server fill:#000000,stroke:#b967ff,stroke-width:2px,color:#fff,shadow:0 0 10px #b967ff;
+    classDef db fill:#000000,stroke:#2ecc71,stroke-width:2px,color:#fff,shadow:0 0 10px #2ecc71;
+    classDef user fill:#000000,stroke:#f1c40f,stroke-width:2px,color:#fff,shadow:0 0 10px #f1c40f;
+
+    User((User)):::user
+    
+    subgraph Frontend ["🖥️ Frontend Layer"]
+        NextJS[Next.js Client<br/>(Redux Toolkit + TW CSS)]:::client
+    end
+
+    subgraph Backend ["⚙️ Backend Layer"]
+        Express[Express.js API<br/>(Auth, Logic, Integration)]:::server
+    end
+
+    subgraph Data ["💾 Data Layer"]
+        Postgres[(PostgreSQL<br/>via AWS RDS)]:::db
+        Prisma[Prisma ORM]:::db
+    end
+
+    User ==>|Interacts| NextJS
+    NextJS <==>|HTTP/REST Calls| Express
+    Express <==>|Query/Mutate| Prisma
+    Prisma <==>|SQL Commands| Postgres
+    
+    linkStyle 0 stroke:#f1c40f,stroke-width:3px;
+    linkStyle 1 stroke:#00d4ff,stroke-width:3px;
+    linkStyle 2 stroke:#b967ff,stroke-width:3px;
+    linkStyle 3 stroke:#2ecc71,stroke-width:3px;
+```
+
+</div>
+
+---
+
+## ⚙️ Environment Setup
+
+To run this project locally, you will need to create `.env` files for both the client and server.
+
+### **Server (.env)**
+Create a file named `.env` in the `server` directory:
+
+```env
+# Server Configuration
+PORT=3001
+NODE_ENV=development
+
+# Database
+DATABASE_URL="postgresql://username:password@localhost:5432/chronos?schema=public"
+
+# Authentication
+JWT_SECRET="your-super-secret-jwt-key"
+
+# CORS Configuration
+FRONTEND_URL="http://localhost:3000"
+```
+
+### **Client (.env.local)**
+Create a file named `.env.local` in the `client` directory:
+
+```env
+# API Configuration
+NEXT_PUBLIC_API_BASE_URL="http://localhost:3001"
+```
+
+---
