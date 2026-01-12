@@ -63,16 +63,16 @@ graph TD
     User((User)):::user
     
     subgraph Frontend ["🖥️ Frontend Layer"]
-        NextJS[Next.js Client<br/>(Redux Toolkit + TW CSS)]:::client
+        NextJS["Next.js Client<br/>(Redux Toolkit + TW CSS)"]:::client
     end
 
     subgraph Backend ["⚙️ Backend Layer"]
-        Express[Express.js API<br/>(Auth, Logic, Integration)]:::server
+        Express["Express.js API<br/>(Auth, Logic, Integration)"]:::server
     end
 
     subgraph Data ["💾 Data Layer"]
-        Postgres[(PostgreSQL<br/>via AWS RDS)]:::db
-        Prisma[Prisma ORM]:::db
+        Postgres[("PostgreSQL<br/>via AWS RDS")]:::db
+        Prisma["Prisma ORM"]:::db
     end
 
     User ==>|Interacts| NextJS
@@ -103,6 +103,7 @@ Chronos/
     ├── src/
     ├── prisma/     # Database Schema
     └── package.json
+```
 
 ---
 
@@ -113,7 +114,7 @@ To run this project locally, you will need to create `.env` files for both the c
 ### **Server (.env)**
 Create a file named `.env` in the `server` directory:
 
-```env
+```bash
 # Server Configuration
 PORT=3001
 NODE_ENV=development
@@ -131,7 +132,7 @@ FRONTEND_URL="http://localhost:3000"
 ### **Client (.env.local)**
 Create a file named `.env.local` in the `client` directory:
 
-```env
+```bash
 # API Configuration
 NEXT_PUBLIC_API_BASE_URL="http://localhost:3001"
 ```
