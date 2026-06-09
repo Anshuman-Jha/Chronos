@@ -1,4 +1,5 @@
 import { User } from "@/state/api";
+import shadows from "@mui/material/styles/shadows";
 import Image from "next/image";
 import React from "react";
 
@@ -11,7 +12,7 @@ const UserCard = ({ user }: Props) => {
     <div className="flex items-center rounded border p-4 shadow">
       {user.profilePictureUrl && (
         <Image
-          src={user.profilePictureUrl ? `/${user.profilePictureUrl}` : "/p1.jpeg"}
+          src={user.profilePictureUrl ? `/${user.profilePictureUrl}` : "/p4.jpeg"}
           alt="profile picture"
           width={32}
           height={32}
