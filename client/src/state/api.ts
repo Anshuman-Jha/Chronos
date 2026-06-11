@@ -1,4 +1,5 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery, FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
+import type { BaseQueryFn, FetchArgs } from "@reduxjs/toolkit/query";
 
 export interface Project {
   id: number;
@@ -72,24 +73,45 @@ export interface Team {
   projectManagerUserId?: number;
 }
 
+const rawBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+const baseUrl =
+  !rawBaseUrl || rawBaseUrl.includes(":8000")
+    ? "http://localhost:3001"
+    : rawBaseUrl;
+
+const baseQuery = fetchBaseQuery({
+  baseUrl,
+  prepareHeaders: (headers) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+    return headers;
+  },
+});
+
+/**
+ * Wrapper that automatically clears a stale/expired token and reloads
+ * the page when the server returns 401 or 403. This forces the auth gate
+ * in authProvider to show the login form instead of looping on errors.
+ */
+const baseQueryWithReauth: BaseQueryFn<
+  string | FetchArgs,
+  unknown,
+  FetchBaseQueryError
+> = async (args, api, extraOptions) => {
+  const result = await baseQuery(args, api, extraOptions);
+  if (result.error && (result.error.status === 401 || result.error.status === 403)) {
+    // Token is expired or invalid — clear it and force re-login
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.reload();
+  }
+  return result;
+};
+
 export const api = createApi({
-  baseQuery: fetchBaseQuery({
-    baseUrl: (() => {
-      const envUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-      // Fix: If env var points to wrong port (8000) or is undefined, use correct default
-      if (!envUrl || envUrl.includes(':8000')) {
-        return 'http://localhost:3001';
-      }
-      return envUrl;
-    })(),
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryWithReauth,
   reducerPath: "api",
   tagTypes: ["Projects", "Tasks", "Users", "Teams"],
   endpoints: (build) => ({
