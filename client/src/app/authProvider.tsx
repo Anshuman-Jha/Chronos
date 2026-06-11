@@ -168,23 +168,20 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     );
   }
 
-  // ── AUTH GATE TEMPORARILY DISABLED ──────────────────────────────────────────
-  // Login is bypassed until the backend auth endpoint is fixed.
-  // To re-enable, uncomment the block below.
-  //
-  // if (!user || !token) {
-  //   return (
-  //     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-[#0b1224] to-[#0f172a] text-white">
-  //       <div className="absolute inset-0 opacity-70 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.28),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(56,189,248,0.22),transparent_30%),radial-gradient(circle_at_50%_85%,rgba(99,102,241,0.25),transparent_32%)]" />
-  //       <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.04),rgba(255,255,255,0))]" />
-  //       <div className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-6 py-12 lg:flex-row lg:items-center lg:gap-12">
-  //         ...
-  //         <LoginForm onLogin={login} onRegister={register} />
-  //         ...
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  // ── AUTH GATE ────────────────────────────────────────────────────────────────
+  // Show the login/register form if the user is not authenticated.
+  // All backend routes require a JWT token, so we must gate the app here.
+  if (!user || !token) {
+    return (
+      <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-[#0b1224] to-[#0f172a] text-white">
+        <div className="absolute inset-0 opacity-70 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.28),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(56,189,248,0.22),transparent_30%),radial-gradient(circle_at_50%_85%,rgba(99,102,241,0.25),transparent_32%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.04),rgba(255,255,255,0))]" />
+        <div className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-6 py-12 lg:flex-row lg:items-center lg:gap-12">
+          <LoginForm onLogin={login} onRegister={register} />
+        </div>
+      </div>
+    );
+  }
   // ────────────────────────────────────────────────────────────────────────────
 
   return (
